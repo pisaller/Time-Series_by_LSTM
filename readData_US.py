@@ -22,6 +22,7 @@ def mkdir(path):
 
 
 def get_stock_prices_us(ticker):
+    ticker = ticker.upper()
     url_string = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=%s&outputsize=full&apikey=%s" % (
         ticker, api_key)
 
@@ -45,7 +46,7 @@ def get_stock_prices_us(ticker):
                 df.loc[-1, :] = data_row
                 df.index = df.index + 1
         print('Data saved to : %s' % file_to_save)
-        df.to_csv(file_to_save)
+        df.to_csv(file_to_save, index=False)
 
     else:
         print('File already exists. Loading data from local...')
