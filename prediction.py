@@ -1,11 +1,14 @@
 import readData_US
 import matplotlib.pyplot as plt
+from sklearn.preprocessing import MinMaxScaler
 
-show_plot = True
+
+show_plot = False
 
 
 def pre_process(data):
     data = data.sort_values('Date').reset_index(drop=True)
+
     if show_plot is True:
         freq = 60
         plt.figure(figsize=(21, 9))
@@ -16,7 +19,22 @@ def pre_process(data):
         plt.ylabel('Highest Price', fontsize=14)
         plt.show()
 
-    return data
+    # Highest price is our target value of prediction
+    highest_price = data.High.values
+    print('Sample Size: ', len(highest_price))
+    # Split the data by 8/2
+    data_length = int(len(highest_price) * 0.8)
+    train_data = highest_price[:data_length]
+    test_data = highest_price[data_length:]
+
+    scaler = MinMaxScaler()
+    train_data = train_data.reshape(-1, 1)
+    test_data = test_data.reshape(-1, 1)
+
+    print(scaler.fit(train_data))
+    print(scaler.transform(train_data))
+
+    return train_data, test_data
 
 
 def main():
