@@ -1,7 +1,8 @@
 import matplotlib.pyplot as plt
-import numpy as np
 from sklearn.preprocessing import MinMaxScaler
-
+from keras.layers import Dense, Activation, Dropout, LSTM
+from keras.models import Sequential, load_model
+from keras.callbacks import EarlyStopping, ModelCheckpoint
 import readData_US
 
 show_plot = False
